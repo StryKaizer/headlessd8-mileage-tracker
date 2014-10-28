@@ -1,0 +1,36 @@
+<div class="row">
+    <div class="col-md-6">
+        <div class="input-daterange input-group" id="datepicker">
+            <input type="text" class="input-sm form-control" name="start"/>
+            <span class="input-group-addon">to</span>
+            <input type="text" class="input-sm form-control" name="end"/>
+        </div>
+    </div>
+    <div class="col-md-6">
+
+        <select ng-model="startLocation" ng-options="location.title.0.value for location in locations"></select><br />
+        <select ng-model="endLocation" ng-options="location.title.0.value for location in locations"></select>
+
+        <input type="text" />
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" checked> Retour
+            </label>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button ng-click="submitEntries()" type="submit" class="btn btn-default">Add</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="row marketing">
+    <ul class="unstyled">
+        <li ng-repeat="entry in entries">
+            <span>{{entry.field_date.0.value}}</span>
+            <span>{{entry.field_date.0.value}}</span>
+        </li>
+    </ul>
+</div>
