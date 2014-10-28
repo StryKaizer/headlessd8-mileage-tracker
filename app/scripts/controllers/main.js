@@ -12,19 +12,11 @@ angular.module('frontApp')
 
 
         $('.input-daterange').datepicker({
-            format: "yyyy-mm-dd",
+            format: 'yyyy-mm-dd',
             weekStart: 1,
             keyboardNavigation: false,
             todayHighlight: true
         });
-
-        var entry = new Entry();
-        entry._links = {"type": {"href": 'http://headless.dev/rest/type/node/entry'}};
-        entry.title = [
-            {'value': 'test'}
-        ];
-        Entry.save(entry);
-
 
         $http.get('http://headless.dev/locations/').then(function (response) {
             var data = response.data;
@@ -49,13 +41,13 @@ angular.module('frontApp')
                 while (startDate <= endDate) {
 
                     var entry = new Entry();
-                    entry.title = [
-                        {'value': 'test'}
-                    ];
+                    entry._links = {type: {href: 'http://headless.dev/rest/type/node/entry'}};
+                    entry.title = [{'value': 'test'}];
+                    entry.field_date = [{value: startDate.getFullYear() + '-' + (startDate.getMonth() + 1) + '-' + startDate.getDate()}];
+                    entry.field_from = [{value:'vorselaar'}];
+                    entry.field_to = [{value:'geel'}];
+                    entry.field_distance = [{value:'20'}];
                     Entry.save(entry);
-
-
-                    console.log(startDate);
 
                     var nextDate = startDate.setDate(startDate.getDate() + 1);
                     startDate = new Date(nextDate);

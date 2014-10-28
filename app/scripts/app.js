@@ -19,9 +19,6 @@ angular
   ])
   .config(function ($routeProvider, $httpProvider) {
     $httpProvider.defaults.headers.common.Authorization = 'Basic ' + window.btoa('jimmy:j');
-    //$httpProvider.defaults.headers.common.Accept = 'application/hal+json';
-    //$httpProvider.defaults.headers.common.Accept = 'application/hal+json';
-    //$httpProvider.defaults.headers.common = {'Content-Type' : 'application/hal+json'};
     $httpProvider.defaults.headers.post = {'Content-Type' : 'application/hal+json'};
 
 
