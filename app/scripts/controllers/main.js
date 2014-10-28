@@ -10,6 +10,14 @@
 angular.module('frontApp')
     .controller('MainCtrl', function ($scope, $http, Entry, Page) {
 
+        $scope.entryData = {
+            'distance': 30,
+            startLocation: 'Vorselaar',
+            endLocation: 'Geel',
+            description: 'Uitvoering werken Webtrack',
+            retour: true
+        };
+
         $('.input-daterange').datepicker({
             format: 'yyyy-mm-dd',
             weekStart: 1,
@@ -17,12 +25,12 @@ angular.module('frontApp')
             todayHighlight: true
         });
 
-        $http.get('http://headless.dev/locations/').then(function (response) {
-            var data = response.data;
-            $scope.locations = data;
-            $scope.startLocation = $scope.locations[0];
-            $scope.endLocation = $scope.locations[1];
-        });
+        //$http.get('http://headless.dev/locations/').then(function (response) {
+        //    var data = response.data;
+        //    $scope.locations = data;
+        //    $scope.startLocation = $scope.locations[0];
+        //    $scope.endLocation = $scope.locations[1];
+        //});
 
         $http.get('http://headless.dev/entries/latest/').then(function (response) {
             $scope.entries = response.data;
@@ -41,12 +49,21 @@ angular.module('frontApp')
 
                     var entry = new Entry();
                     entry._links = {type: {href: 'http://headless.dev/rest/type/node/entry'}};
-                    entry.title = [{'value': 'test'}];
+                    entry.title = [{'value': $scope.entryData.description}];
                     entry.field_date = [{value: startDate.getFullYear() + '-' + (startDate.getMonth() + 1) + '-' + startDate.getDate()}];
-                    entry.field_from = [{value:'vorselaar'}];
-                    entry.field_to = [{value:'geel'}];
-                    entry.field_distance = [{value:'20'}];
+                    entry.field_from = [{value: $scope.entryData.startLocation}];
+                    entry.field_to = [{value: $scope.entryData.endLocation}];
+                    entry.field_distance = [{value: $scope.entryData.distance}];
+                    $scope.entries.push(entry);
+
                     Entry.save(entry);
+                    if($scope.entryData.retour){
+                        var retour = angular.copy(entry);
+                        retour.field_from = [{value: $scope.entryData.endLocation}];
+                        retour.field_to = [{value: $scope.entryData.startLocation}];
+                        Entry.save(retour);
+                        $scope.entries.push(retour);
+                    }
 
                     var nextDate = startDate.setDate(startDate.getDate() + 1);
                     startDate = new Date(nextDate);
@@ -54,6 +71,11 @@ angular.module('frontApp')
             }
 
 
+        };
+
+        $scope.sortEntries = function(entry) {
+            var date = new Date(entry.field_date[0].value);
+            return date;
         };
 
     });

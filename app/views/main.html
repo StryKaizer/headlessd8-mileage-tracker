@@ -8,13 +8,18 @@
     </div>
     <div class="col-md-6">
 
-        <select ng-model="startLocation" ng-options="location.title.0.value for location in locations"></select><br />
-        <select ng-model="endLocation" ng-options="location.title.0.value for location in locations"></select>
+        <!--<select ng-model="startLocation" ng-options="location.title.0.value for location in locations"></select><br />-->
+        <!--<select ng-model="endLocation" ng-options="location.title.0.value for location in locations"></select>-->
 
-        <input type="text" />
+
+        <input type="text" ng-model="entryData.startLocation"/>
+        <input type="text" ng-model="entryData.endLocation"/>
+        <input type="text" ng-model="entryData.distance"/>
+        <input type="text" ng-model="entryData.description"/>
+
         <div class="checkbox">
             <label>
-                <input type="checkbox" checked> Retour
+                <input type="checkbox" ng-model="entryData.retour"> Retour
             </label>
         </div>
         <div class="form-group">
@@ -27,10 +32,22 @@
 </div>
 
 <div class="row marketing">
-    <ul class="unstyled">
-        <li ng-repeat="entry in entries">
-            <span>{{entry.field_date.0.value}}</span>
-            <span>{{entry.field_date.0.value}}</span>
-        </li>
-    </ul>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Date</th>
+            <th>From</th>
+            <th>To</th>
+            <th>Description</th>
+            <th>Distance</th>
+        </tr>
+        </thead>
+        <tr ng-repeat="entry in entries | orderBy : sortEntries : true">
+            <td>{{entry.field_date.0.value}}</td>
+            <td>{{entry.field_from.0.value}}</td>
+            <td>{{entry.field_to.0.value}}</td>
+            <td>{{entry.title.0.value}}</td>
+            <td>{{entry.field_distance.0.value}}</td>
+        </tr>
+    </table>
 </div>
