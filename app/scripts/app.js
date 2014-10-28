@@ -20,9 +20,11 @@ angular
   .config(function ($routeProvider, $httpProvider) {
     $httpProvider.defaults.headers.common.Authorization = 'Basic ' + window.btoa('jimmy:j');
     $httpProvider.defaults.headers.post = {'Content-Type' : 'application/hal+json'};
+        //$httpProvider.defaults.useXDomain = true;
 
 
-    $routeProvider
+
+        $routeProvider
       .when('/', {
         templateUrl: 'views/main.html',
         controller: 'MainCtrl'

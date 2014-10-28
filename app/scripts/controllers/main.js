@@ -8,8 +8,7 @@
  * Controller of the frontApp
  */
 angular.module('frontApp')
-    .controller('MainCtrl', function ($scope, $http, Entry) {
-
+    .controller('MainCtrl', function ($scope, $http, Entry, Page) {
 
         $('.input-daterange').datepicker({
             format: 'yyyy-mm-dd',
